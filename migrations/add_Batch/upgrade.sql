@@ -1,5 +1,5 @@
 CREATE TABLE Batch (
-    id int NOT NULL AUTO_INCREMENT,
+    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     productType int NOT NULL,
     AmountProduced int NOT NULL,
     OEE float NOT NULL,
@@ -8,4 +8,5 @@ CREATE TABLE Batch (
     productionTime int NOT NULL,
     acceptableProductAmount int NOT NULL,
     defectProductAmount int NOT NULL
-)
+);
+CREATE INDEX batch_id ON Batch(id);
