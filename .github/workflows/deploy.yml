@@ -17,9 +17,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASS }}
       - name: Publish to registry
         run: |
-          make requirements.install
-          docker build --cache-from $ONBUILD -t $ONBUILD -f docker/Dockerfile .
-          docker push registry.nymann.dev/bierproductie_api
+          make install-ci
         env:
             ONBUILD: registry.nymann.dev/bierproductie_api:onbuild
             IMAGE: registry.nymann.dev/bierproductie_api
