@@ -1,4 +1,6 @@
 TARGET?=docker
+IMAGE=registry.nymann.dev/bierproductie_api
+ONBUILD=registry.nymann.dev/bierproductie_api:onbuild
 COMPONENT?=bierproductie_api
 TMP_DOCKER:=/tmp/.${COMPONENT}_install_docker.empty_target
 TMP_HOOKS:=/tmp/.${COMPONENT}_hooks.empty_target

@@ -14,15 +14,12 @@ cfg.read("setup.cfg")
 options = cfg["options"]
 
 switch = {
-    "install": "install_requires",
-    "test": "tests_require",
-    "setup": "setup_requires",
-}
+        "install": "install_requires",
+        "test": "tests_require",
+        "setup": "setup_requires",
+        }
 
-dependencies = [
-    "--extra-index-url https://software.siemens.dk/pypi/",
-    "--trusted-host software.siemens.dk",
-]
+dependencies = list()
 
 for arg in sys.argv[1:]:
     operation = switch[arg]

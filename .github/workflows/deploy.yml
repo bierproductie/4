@@ -1,0 +1,23 @@
+name: Deploy Bierproductie Api to registry.nymann.dev
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Publish to registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: registry.nymann.dev
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+      - name: Publish to registry
+        run: |
+          make install-ci
+        env:
+            ONBUILD: registry.nymann.dev/bierproductie_api:onbuild
+            IMAGE: registry.nymann.dev/bierproductie_api
