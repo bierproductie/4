@@ -7,5 +7,5 @@ install-local: ${VERSION} requirements.install
 	@pip install -e '.[dev]'
 
 install-ci: ${VERSION} requirements.install
-    docker build --cache-from ${ONBUILD} -t ${ONBUILD} -f docker/Dockerfile .
-    docker push ${IMAGE}
+	docker build --cache-from ${ONBUILD} -t ${ONBUILD} -f docker/Dockerfile .
+	docker push ${IMAGE}
