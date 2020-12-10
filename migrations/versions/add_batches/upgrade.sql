@@ -3,7 +3,7 @@ CREATE TABLE batches (
     speed INTEGER,
     amount_to_produce INTEGER,
     started_dt TIMESTAMP WITH TIME ZONE,
-    recipe_id FLOAT REFERENCES recipes(identifier),
+    recipe_id VARCHAR(128) REFERENCES recipes(name),
     finished_dt TIMESTAMP WITH TIME ZONE,
     oee FLOAT
 );

@@ -8,6 +8,7 @@ from sentry_sdk.integrations import sqlalchemy
 
 from bierproductie_api.core import version
 from bierproductie_api.core.db import DB
+from bierproductie_api.routers import recipes_route
 
 
 def create_app() -> FastAPI:
@@ -46,6 +47,8 @@ def _register_routes(app: FastAPI) -> FastAPI:
     Returns:
         FastAPI:
     """
+    app.include_router(recipes_route.router, tags=[
+                       "Recipes"], prefix="/recipes")
     return app
 
 

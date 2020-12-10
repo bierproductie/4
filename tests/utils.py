@@ -79,4 +79,3 @@ def no_state_change(data: Dict[str, Any],
             assert val == data[key]
         except ValueError:
             continue
-
