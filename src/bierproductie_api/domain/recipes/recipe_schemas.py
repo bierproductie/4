@@ -12,7 +12,7 @@ import pydantic
 class _Base(pydantic.BaseModel):
     """Used as baseclass for all other schemas inside this module.
 
-    The base schema is kept private (by leftpadding with `_`).
+    The base schema is kept private (by left padding with `_`).
     """
 
     machine_id: Optional[float] = pydantic.Field(None)

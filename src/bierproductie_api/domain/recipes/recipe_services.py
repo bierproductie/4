@@ -1,16 +1,13 @@
 """This module is for implementing recipe services.
 
 The Service class' job is to interface with the recipe queries, and
-transform the result provided by the Quries class into Schemas. When
+transform the result provided by the Queries class into Schemas. When
 creating an instance of Service() you shouldn't call
 `service._queries()` directly, hence why it's declared as private (_).
 """
 from typing import List
 
-import pydantic
-
 from bierproductie_api.core import exceptions
-from bierproductie_api.domain import base_schemas
 from bierproductie_api.domain.recipes import recipe_queries
 from bierproductie_api.domain.recipes import recipe_schemas
 
@@ -52,7 +49,6 @@ class Service:
         except Exception as e:
             raise exceptions.NotFound from e
 
-
     async def get_list(self) -> List[recipe_schemas.DB]:
         """Gets a paginated result list of recipes.
 
@@ -62,13 +58,12 @@ class Service:
         recipes = await self._queries.get_list()
         return [recipe_schemas.DB.from_orm(recipe) for recipe in recipes]
 
-    async def update(
-            self, name: str,
-            new_recipe: recipe_schemas.Update) -> recipe_schemas.DB:
+    async def update(self, name: str,
+                     new_recipe: recipe_schemas.Update) -> recipe_schemas.DB:
         """Updates an existing recipe.
 
         Args:
-            identifier (float): identifier
+            name (str): name of the recipe
             new_recipe (recipe_schemas.Update): new_recipe
         Returns:
             recipe_schemas.DB:
@@ -79,11 +74,10 @@ class Service:
                                                     new_recipe=new_recipe)
         return recipe_schemas.DB.from_orm(updated_recipe)
 
-    async def delete(self,
-                     name: str) -> recipe_schemas.DB:
+    async def delete(self, name: str) -> recipe_schemas.DB:
         """Deletes a specific recipe
         Args:
-            identifier (float): identifier
+            name (str): name
         Returns:
             recipe_schemas.DB:
         """
