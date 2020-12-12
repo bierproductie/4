@@ -52,7 +52,6 @@ class Service:
         except Exception as e:
             raise exceptions.NotFound from e
 
-
     async def get_list(self) -> List[recipe_schemas.DB]:
         """Gets a paginated result list of recipes.
 
@@ -62,13 +61,11 @@ class Service:
         recipes = await self._queries.get_list()
         return [recipe_schemas.DB.from_orm(recipe) for recipe in recipes]
 
-    async def update(
-            self, name: str,
-            new_recipe: recipe_schemas.Update) -> recipe_schemas.DB:
+    async def update(self, name: str, new_recipe: recipe_schemas.Update) -> recipe_schemas.DB:
         """Updates an existing recipe.
 
         Args:
-            identifier (float): identifier
+            name (str): name of the recipe
             new_recipe (recipe_schemas.Update): new_recipe
         Returns:
             recipe_schemas.DB:
