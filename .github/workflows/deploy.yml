@@ -19,5 +19,5 @@ jobs:
         run: |
           make install-ci
         env:
-            ONBUILD: registry.nymann.dev/bierproductie_api:onbuild
-            IMAGE: registry.nymann.dev/bierproductie_api
+            ONBUILD: registry.nymann.dev/bierproductie/bierproductie_api:onbuild
+            IMAGE: registry.nymann.dev/bierproductie/bierproductie_api
