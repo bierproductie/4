@@ -1,7 +1,7 @@
 """This module is for implementing recipe services.
 
 The Service class' job is to interface with the recipe queries, and
-transform the result provided by the Quries class into Schemas. When
+transform the result provided by the Queries class into Schemas. When
 creating an instance of Service() you shouldn't call
 `service._queries()` directly, hence why it's declared as private (_).
 """
@@ -74,11 +74,10 @@ class Service:
                                                     new_recipe=new_recipe)
         return recipe_schemas.DB.from_orm(updated_recipe)
 
-    async def delete(self,
-                     name: str) -> recipe_schemas.DB:
+    async def delete(self, name: str) -> recipe_schemas.DB:
         """Deletes a specific recipe
         Args:
-            identifier (float): identifier
+            name (str): name
         Returns:
             recipe_schemas.DB:
         """

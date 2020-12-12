@@ -27,9 +27,6 @@ RUN pip install -r requirements.install
 ## copy over rest of the app
 COPY --chown=bierproductie:bierproductie . .
 
-RUN pip install \
-    #--extra-index-url https://software.siemens.dk/pypi/ \
-    #--trusted-host software.siemens.dk \
-    -e '.[dev]'
+RUN pip install -e '.[dev]'
 
 ENTRYPOINT ["./docker/entrypoint.sh"]

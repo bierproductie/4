@@ -1,4 +1,4 @@
-CI_REGISTRY_IMAGE?=mo-gitlab.siemens.dk:4567/sw-group/banedanmark/s-bane/pykpi/tlog/components/frontend
+CI_REGISTRY_IMAGE?=registry.nymann.dev/bierproductie/bierproductie-api
 ONBUILD?=${CI_REGISTRY_IMAGE}:onbuild
 ONBUILD_VER?=${ONBUILD}
 
