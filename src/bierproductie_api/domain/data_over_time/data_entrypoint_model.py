@@ -15,7 +15,8 @@ class Model(DB.Model):
 
     batch_id = DB.Column(DB.Integer(), nullable=False)
     measurement_ts = DB.Column(DB.DateTime(), primary_key=True)
-    inserted_ts = DB.Column(DB.DateTime(), default=DB.text("CURRENT_TIMESTAMP"))
+    inserted_ts = DB.Column(DB.DateTime(),
+                            default=DB.text('CURRENT_TIMESTAMP'))
     temperature = DB.Column(DB.Float())
     humidity = DB.Column(DB.Float())
     vibration = DB.Column(DB.Float())

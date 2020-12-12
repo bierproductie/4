@@ -13,8 +13,7 @@ import pydantic
 from starlette import status
 
 from bierproductie_api.core import service_factory
-from bierproductie_api.domain.data_over_time import (
-    data_entrypoint_schemas)
+from bierproductie_api.domain.data_over_time import data_entrypoint_schemas
 
 router = fastapi.APIRouter()
 

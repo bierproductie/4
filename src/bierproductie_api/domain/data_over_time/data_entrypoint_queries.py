@@ -1,12 +1,12 @@
 """This module is for all data_entrypoint related queries
 """
-from typing import List, Tuple
-
 import datetime
+from typing import List
+from typing import Tuple
 
 from bierproductie_api.core.db import DB
-from bierproductie_api.domain.data_over_time import (
-    data_entrypoint_model, data_entrypoint_schemas)
+from bierproductie_api.domain.data_over_time import data_entrypoint_model
+from bierproductie_api.domain.data_over_time import data_entrypoint_schemas
 
 CreateSchema = data_entrypoint_schemas.Create
 UpdateSchema = data_entrypoint_schemas.Update

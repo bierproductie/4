@@ -4,8 +4,9 @@ These schemas are used for creating new instances of data_entrypoint. Returning
 paginated result (`Paginated`) and transforming a data_entrypoint
 
 """
-from typing import List, Optional
 import datetime
+from typing import List
+from typing import Optional
 
 import pydantic
 
@@ -40,7 +41,8 @@ class Create(pydantic.BaseModel):
     rejected: int = pydantic.Field(..., ge=0)
 
     @pydantic.validator("measurement_ts")
-    def ts_must_contain_timezone(cls, value: datetime.datetime):  # This is a class due to the decorator returning a callable classmethod pylint: disable=no-self-argument
+    # This is a class due to the decorator returning a callable classmethod pylint: disable=no-self-argument
+    def ts_must_contain_timezone(cls, value: datetime.datetime):
         if value.tzinfo is None:
             raise ValueError("Timestamp must contain a timezone")
         return value

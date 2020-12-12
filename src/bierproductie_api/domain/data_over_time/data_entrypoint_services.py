@@ -6,13 +6,14 @@ creating an instance of Service() you shouldn't call
 `service._queries()` directly, hence why it's declared as private (_).
 """
 
-import pydantic
 import datetime
+
+import pydantic
 
 from bierproductie_api.core import exceptions
 from bierproductie_api.domain import base_schemas
-from bierproductie_api.domain.data_over_time import (
-    data_entrypoint_queries, data_entrypoint_schemas)
+from bierproductie_api.domain.data_over_time import data_entrypoint_queries
+from bierproductie_api.domain.data_over_time import data_entrypoint_schemas
 
 
 class Service:
@@ -89,7 +90,8 @@ class Service:
 
         Args:
             measurement_ts (datetime.datetime): measurement_ts
-            new_data_entrypoint (data_entrypoint_schemas.Update): new_data_entrypoint
+            new_data_entrypoint (data_entrypoint_schemas.Update):
+                new_data_entrypoint
         Returns:
             data_entrypoint_schemas.DB:
         """
@@ -101,8 +103,8 @@ class Service:
             new_data_entrypoint=new_data_entrypoint)
         return data_entrypoint_schemas.DB.from_orm(updated)
 
-    async def delete(self,
-                     measurement_ts: datetime.datetime) -> data_entrypoint_schemas.DB:
+    async def delete(self, measurement_ts: datetime.datetime
+                     ) -> data_entrypoint_schemas.DB:
         """Deletes a specific data_entrypoint
         Args:
             measurement_ts (datetime.datetime): measurement_ts
