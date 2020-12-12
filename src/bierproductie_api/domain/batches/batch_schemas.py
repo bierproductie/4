@@ -20,15 +20,18 @@ class _Base(pydantic.BaseModel):
     """
 
     speed: Optional[int] = pydantic.Field(None)
-    amount_to_produce: Optional[int] = pydantic.Field(None)
     started_dt: Optional[datetime.datetime] = pydantic.Field(None)
+    amount_to_produce: Optional[int] = pydantic.Field(None)
     recipe_id: Optional[str] = pydantic.Field(None, max_length=128)
     finished_dt: Optional[datetime.datetime] = pydantic.Field(None)
     oee: Optional[float] = pydantic.Field(None)
 
 
-class Create(_Base):
+class Create(pydantic.BaseModel):
     """Create schema is used for validating POST requests."""
+    speed: int = pydantic.Field(..., gt=0)
+    amount_to_produce: int = pydantic.Field(..., gt=0)
+    recipe_id: str = pydantic.Field(...)
 
 
 class Update(_Base):
@@ -38,6 +41,7 @@ class Update(_Base):
 class DB(_Base):
     """DB schema is used for transforming an ORM model to a pydantic model."""
     identifier: int
+    started_dt: Optional[datetime.datetime] = pydantic.Field(None)
 
     class Config:
         """We set orm_mode to True to allow transforming the ORM model."""

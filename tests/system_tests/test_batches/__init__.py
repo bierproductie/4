@@ -41,8 +41,5 @@ def random_batch(recipe_name: str):
     return {
         "speed": random.randint(0, 300),
         "amount_to_produce": random.randint(0, 200),
-        "started_dt": utils.random_datetime(2020, 2050).isoformat(),
-        "recipe_id": recipe_name,
-        "finished_dt": utils.random_datetime(2020, 2050).isoformat(),
-        "oee": random.uniform(0, 200),
+        "recipe_id": recipe_name
     }
