@@ -8,8 +8,6 @@ creating an instance of Service() you shouldn't call
 
 import datetime
 
-import pydantic
-
 from bierproductie_api.core import exceptions
 from bierproductie_api.domain import base_schemas
 from bierproductie_api.domain.data_over_time import data_entrypoint_queries

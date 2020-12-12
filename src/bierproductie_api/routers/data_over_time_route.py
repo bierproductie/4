@@ -6,8 +6,6 @@ the data_entrypoint service from the `service_factory`, by doing it this way
 the controller only knows which methods it can call in data_entrypoint Service
 but nothing about the database.
 """
-import datetime
-
 import fastapi
 import pydantic
 from starlette import status
