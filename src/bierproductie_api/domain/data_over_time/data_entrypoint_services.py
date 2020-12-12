@@ -58,8 +58,9 @@ class Service:
 
     async def get_list(
         self,
-        page: pydantic.conint(ge=1),
-        page_size: pydantic.conint(ge=1, le=100),
+        batch_id: int,
+        page: int,
+        page_size: int,
     ) -> data_entrypoint_schemas.Paginated:
         """Gets a paginated result list of data_over_time.
 
@@ -70,6 +71,7 @@ class Service:
             data_entrypoint_schemas.Paginated:
         """
         data_over_time, total = await self._queries.get_list(
+            batch_id=batch_id,
             page=page,
             page_size=page_size)
         more = ((total / page_size) - page) > 0

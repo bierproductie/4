@@ -20,10 +20,14 @@ class Queries():
     async def create(self, data_entrypoint: CreateSchema) -> Model:
         return await Model.create(**data_entrypoint.__dict__)
 
-    async def get_list(self, page_size: int, page: int
-                       ) -> Tuple[List[Model], int]:
+    async def get_list(self,
+                       batch_id: int,
+                       page_size: int,
+                       page: int) -> Tuple[List[Model], int]:
 
-        data_over_time: List[Model] = await Model.query.order_by(
+        data_over_time: List[Model] = await Model.query.where(
+            Model.batch_id == batch_id
+        ).order_by(
             Model.measurement_ts.asc()
         ).offset(
             page_size * (page - 1)
