@@ -2,14 +2,15 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE data_over_time (
     batch_id INTEGER NOT NULL REFERENCES batches(identifier),
-    measurement_ts TIMESTAMP WITH TIME ZONE PRIMARY KEY,
+    measurement_ts TIMESTAMP WITH TIME ZONE,
     inserted_ts TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     temperature FLOAT,
     humidity FLOAT,
     vibration FLOAT,
     produced INTEGER,
     state INTEGER,
-    rejected INTEGER
+    rejected INTEGER,
+    PRIMARY KEY(measurement_ts)
 ) PARTITION BY RANGE (measurement_ts);
 CREATE INDEX data_over_time_idx ON data_over_time (batch_id, measurement_ts);
 

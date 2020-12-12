@@ -1,6 +1,7 @@
 """This module is where we initialize our App
 """
 
+from bierproductie_api.routers import data_over_time_route
 from fastapi import FastAPI
 from fastapi.middleware import cors
 import sentry_sdk
@@ -48,6 +49,7 @@ def _register_routes(app: FastAPI) -> FastAPI:
     Returns:
         FastAPI:
     """
+    app.include_router(data_over_time_route.router, tags=["Data_Over_Time"], prefix="/data_over_time")
     app.include_router(batches_route.router, tags=[
                        "Batches"], prefix="/batches")
     app.include_router(recipes_route.router, tags=[
