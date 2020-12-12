@@ -3,6 +3,8 @@ from bierproductie_api.domain.batches import batch_queries
 from bierproductie_api.domain.batches import batch_services
 from bierproductie_api.domain.data_over_time import data_entrypoint_queries
 from bierproductie_api.domain.data_over_time import data_entrypoint_services
+from bierproductie_api.domain.maintenance import maintx_queries
+from bierproductie_api.domain.maintenance import maintx_services
 from bierproductie_api.domain.recipes import recipe_queries
 from bierproductie_api.domain.recipes import recipe_services
 
@@ -17,3 +19,7 @@ def get_batch_services() -> batch_services.Service:
 
 def get_data_entrypoint_services() -> data_entrypoint_services.Service:
     return data_entrypoint_services.Service(data_entrypoint_queries.Queries())
+
+
+def get_maintx_services() -> maintx_services.Service:
+    return maintx_services.Service(maintx_queries.Queries())
