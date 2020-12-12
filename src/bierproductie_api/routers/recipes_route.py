@@ -19,7 +19,7 @@ router = fastapi.APIRouter()
 
 @router.get('/', response_model=List[recipe_schemas.DB])
 async def get_recipes(service=fastapi.Depends(
-    service_factory.get_recipe_services)):
+        service_factory.get_recipe_services)):
     """Get a paginated list of recipes.
 
     Args:

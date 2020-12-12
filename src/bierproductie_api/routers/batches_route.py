@@ -19,7 +19,7 @@ router = fastapi.APIRouter()
 
 @router.get('/', response_model=List[batch_schemas.DB])
 async def get_batches(service=fastapi.Depends(
-                          service_factory.get_batch_services)):
+        service_factory.get_batch_services)):
     """Get a list of batches.
 
     Args:
