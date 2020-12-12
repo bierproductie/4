@@ -14,3 +14,5 @@ $$ language 'plpgsql';
 CREATE TRIGGER update_maintenance_changetimestamp BEFORE UPDATE
     ON maintenance FOR EACH ROW EXECUTE PROCEDURE 
     update_changetimestamp_column();
+
+INSERT INTO maintenance(value) VALUES(0);
