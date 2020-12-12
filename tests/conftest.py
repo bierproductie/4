@@ -26,5 +26,5 @@ def client(app):
         subprocess.check_call(["alembic", "upgrade", "head"], cwd=cwd)
     except subprocess.CalledProcessError:
         sys.exit(1)
-    with testclient.TestClient(app, "http://localhost:11001") as test_client:
+    with testclient.TestClient(app) as test_client:
         yield test_client
