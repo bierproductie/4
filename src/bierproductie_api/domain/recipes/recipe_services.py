@@ -7,10 +7,7 @@ creating an instance of Service() you shouldn't call
 """
 from typing import List
 
-import pydantic
-
 from bierproductie_api.core import exceptions
-from bierproductie_api.domain import base_schemas
 from bierproductie_api.domain.recipes import recipe_queries
 from bierproductie_api.domain.recipes import recipe_schemas
 
@@ -61,7 +58,8 @@ class Service:
         recipes = await self._queries.get_list()
         return [recipe_schemas.DB.from_orm(recipe) for recipe in recipes]
 
-    async def update(self, name: str, new_recipe: recipe_schemas.Update) -> recipe_schemas.DB:
+    async def update(self, name: str,
+                     new_recipe: recipe_schemas.Update) -> recipe_schemas.DB:
         """Updates an existing recipe.
 
         Args:

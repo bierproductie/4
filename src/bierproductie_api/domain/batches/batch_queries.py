@@ -1,11 +1,7 @@
 """This module is for all batch related queries
 """
 from typing import List
-from typing import Tuple
 
-import pydantic
-
-from bierproductie_api.core.db import DB
 from bierproductie_api.domain.batches import batch_model
 from bierproductie_api.domain.batches import batch_schemas
 
