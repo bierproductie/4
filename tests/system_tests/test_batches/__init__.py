@@ -39,7 +39,7 @@ def get_route(identifier: int):
 
 def random_batch(recipe_name: str):
     return {
-        "speed": random.randint(0, 300),
-        "amount_to_produce": random.randint(0, 200),
+        "speed": random.randint(1, 300),
+        "amount_to_produce": random.randint(1, 200),
         "recipe_id": recipe_name
     }
