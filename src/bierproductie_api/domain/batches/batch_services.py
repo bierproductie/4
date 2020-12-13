@@ -8,20 +8,28 @@ creating an instance of Service() you shouldn't call
 
 from typing import List
 
+import requests
+
+from bierproductie_api.core import config_loader
 from bierproductie_api.domain.batches import batch_queries
 from bierproductie_api.domain.batches import batch_schemas
+
+from bierproductie_api.domain.recipes import recipe_queries
 
 
 class Service:
     """Service."""
 
-    def __init__(self, queries: batch_queries.Queries):
+    def __init__(self,
+                 queries: batch_queries.Queries,
+                 recipe_queries: recipe_queries.Queries):
         """__init__.
 
         Args:
             queries (batch_queries.Queries): queries
         """
-        self._queries = queries
+        self._recipe_queries = queries
+        self._batch_queries = queries
 
     async def create(self, batch: batch_schemas.Create) -> batch_schemas.DB:
         """create.
@@ -31,7 +39,18 @@ class Service:
         Returns:
             batch_schemas.DB:
         """
-        new_batch = await self._queries.create(batch=batch)
+        recipe = await self._recipe_queries.get_by_id(
+                identifier=batch.recipe_id)
+
+        client_batch = dict(speed=batch.speed,
+                            amount_to_produce=batch.amount_to_produce,
+                            recipe=recipe.machine_id)
+
+        client_url = config_loader.OPCUA_CLIENT_URL + '/batch'
+        response = requests.post(client_url, json=client_batch)
+        data = response.json()
+        print(data)
+        new_batch = await self._recipe_queries.create(batch=batch)
         return batch_schemas.DB.from_orm(new_batch)
 
     async def get_by_id(
@@ -43,7 +62,7 @@ class Service:
         Returns:
             batch_schemas.DB: If the batch is found, otherwise 404.
         """
-        return await self._queries.get_by_id(identifier=identifier)
+        return await self._recipe_queries.get_by_id(identifier=identifier)
 
     async def get_list(self) -> List[batch_schemas.DB]:
         """Gets a paginated result list of batches.
@@ -51,7 +70,7 @@ class Service:
         Returns:
             batch_schemas.Paginated:
         """
-        batches = await self._queries.get_list()
+        batches = await self._recipe_queries.get_list()
         return [batch_schemas.DB.from_orm(batch) for batch in batches]
 
     async def update(
@@ -65,11 +84,11 @@ class Service:
         Returns:
             batch_schemas.DB:
         """
-        old_batch = await self._queries.get_by_id(
+        old_batch = await self._recipe_queries.get_by_id(
             identifier=identifier)
 
-        updated_batch = await self._queries.update(old_batch=old_batch,
-                                                   new_batch=new_batch)
+        updated_batch = await self._recipe_queries.update(old_batch=old_batch,
+                                                          new_batch=new_batch)
         return batch_schemas.DB.from_orm(updated_batch)
 
     async def delete(self,
@@ -80,6 +99,6 @@ class Service:
         Returns:
             batch_schemas.DB:
         """
-        deleted_batch = await self._queries.delete(
+        deleted_batch = await self._recipe_queries.delete(
             identifier=identifier)
         return batch_schemas.DB.from_orm(deleted_batch)
