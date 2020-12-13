@@ -13,6 +13,7 @@ from bierproductie_api.routers import data_over_time_route
 from bierproductie_api.routers import inventory_statuses_route
 from bierproductie_api.routers import maintenance_route
 from bierproductie_api.routers import recipes_route
+from bierproductie_api.routers import commands_route
 
 
 def create_app() -> FastAPI:
@@ -59,6 +60,8 @@ def _register_routes(app: FastAPI) -> FastAPI:
                        "Data_Over_Time"], prefix="/data_over_time")
     app.include_router(batches_route.router, tags=[
                        "Batches"], prefix="/batches")
+    app.include_router(commands_route.router, tags=[
+                       "Commands"], prefix="/commands")
     app.include_router(recipes_route.router, tags=[
                        "Recipes"], prefix="/recipes")
     return app
