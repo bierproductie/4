@@ -82,25 +82,23 @@ class Service:
         return data_entrypoint_schemas.Paginated(results=results,
                                                  pagination=pagination)
 
-    async def update(
-            self, measurement_ts: datetime.datetime,
-            new_data_entrypoint: data_entrypoint_schemas.Update
-    ) -> data_entrypoint_schemas.DB:
+    async def update(self, data_entrypoint: data_entrypoint_schemas.Update
+                     ) -> data_entrypoint_schemas.DB:
         """Updates an existing data_entrypoint.
 
         Args:
-            measurement_ts (datetime.datetime): measurement_ts
-            new_data_entrypoint (data_entrypoint_schemas.Update):
-                new_data_entrypoint
+            data_entrypoint (data_entrypoint_schemas.Update): data_entrypoint
         Returns:
             data_entrypoint_schemas.DB:
         """
         old_data_entrypoint = await self._queries.get_by_id(
-            measurement_ts=measurement_ts)
+            measurement_ts=data_entrypoint.measurement_ts)
+        if old_data_entrypoint is None:
+            raise exceptions.NotFound()
 
         updated = await self._queries.update(
             old_data_entrypoint=old_data_entrypoint,
-            new_data_entrypoint=new_data_entrypoint)
+            new_data_entrypoint=data_entrypoint)
         return data_entrypoint_schemas.DB.from_orm(updated)
 
     async def delete(self, measurement_ts: datetime.datetime

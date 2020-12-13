@@ -35,6 +35,23 @@ async def get_data_over_time(batch_id: int,
                                   page_size=page_size)
 
 
+@router.put('/',
+            response_model=data_entrypoint_schemas.DB,
+            status_code=status.HTTP_201_CREATED)
+async def update_data_entrypoint(
+    data_entrypoint: data_entrypoint_schemas.Update,
+    service=fastapi.Depends(
+        service_factory.get_data_entrypoint_services)
+):
+    """Update an existing data_entrypoint.
+
+    TODO(Add Doc)
+    Args:
+        data_entrypoint (data_entrypoint_schemas.Update): data_entrypoint
+    """
+    return await service.update(data_entrypoint=data_entrypoint)
+
+
 @router.post('/',
              response_model=data_entrypoint_schemas.DB,
              status_code=status.HTTP_201_CREATED)

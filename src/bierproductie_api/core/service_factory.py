@@ -18,7 +18,8 @@ def get_recipe_services() -> recipe_services.Service:
 
 
 def get_batch_services() -> batch_services.Service:
-    return batch_services.Service(batch_queries.Queries())
+    return batch_services.Service(queries=batch_queries.Queries(),
+                                  recipe_queries=recipe_queries.Queries())
 
 
 def get_data_entrypoint_services() -> data_entrypoint_services.Service:
