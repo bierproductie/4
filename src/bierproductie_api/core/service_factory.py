@@ -23,7 +23,10 @@ def get_batch_services() -> batch_services.Service:
 
 
 def get_data_entrypoint_services() -> data_entrypoint_services.Service:
-    return data_entrypoint_services.Service(data_entrypoint_queries.Queries())
+    return data_entrypoint_services.Service(
+        dot_queries=data_entrypoint_queries.Queries(),
+        recipe_queries=recipe_queries.Queries(),
+        batch_queries=batch_queries.Queries())
 
 
 def get_maintx_services() -> maintx_services.Service:
