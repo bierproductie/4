@@ -67,6 +67,9 @@ class Service:
         """
         return await self._batch_queries.get_by_id(identifier=identifier)
 
+    async def get_latest(self) -> batch_schemas.DB:
+        return await self._batch_queries.get_latest()
+
     async def get_list(self) -> List[batch_schemas.DB]:
         """Gets a paginated result list of batches.
 
