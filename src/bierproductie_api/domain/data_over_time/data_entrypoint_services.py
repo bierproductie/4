@@ -36,6 +36,7 @@ class Service:
             data_entrypoint_schemas.DB:
         """
         entry = await self._queries.create(data_entrypoint=data_entrypoint)
+        entry.measurement_ts
         return data_entrypoint_schemas.DB.from_orm(entry)
 
     async def get_by_id(self,

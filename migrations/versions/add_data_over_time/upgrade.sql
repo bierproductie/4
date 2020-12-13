@@ -40,3 +40,40 @@ END;
 $$ LANGUAGE plpgsql;
 
 SELECT create_partitions(2020, 2030);
+
+CREATE OR REPLACE FUNCTION add_started_at_to_batch()
+  RETURNS TRIGGER AS
+$$
+DECLARE
+    s_batch batches%rowtype;
+BEGIN
+    SELECT * FROM batches
+    INTO s_batch
+    WHERE identifier = NEW."batch_id";
+    
+    if not found then
+        raise notice 'batch not found';
+    end if;
+
+    if s_batch.started_dt is null then
+        UPDATE batches
+        SET started_dt=NEW."measurement_ts"
+        WHERE identifier=NEW."batch_id";
+    end if;
+
+    if NEW."state" = 16 then
+        UPDATE batches
+        SET finished_dt=NEW."measurement_ts"
+        WHERE identifier=NEW."batch_id";
+    end if;
+RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+
+CREATE TRIGGER data_over_time_insert_trigger
+  AFTER INSERT OR UPDATE
+  ON "data_over_time"
+  FOR EACH ROW
+  EXECUTE PROCEDURE add_started_at_to_batch();
