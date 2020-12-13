@@ -36,7 +36,8 @@ async def get_data_over_time(batch_id: int,
     """
     return await service.get_list(batch_id=batch_id,
                                   page=page,
-                                  page_size=page_size)
+                                  page_size=page_size,
+                                  from_dt=from_dt)
 
 
 @router.put('/',
