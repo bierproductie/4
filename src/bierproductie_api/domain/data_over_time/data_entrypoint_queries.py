@@ -32,7 +32,7 @@ class Queries():
 
         clause = self.__from_clause(batch_id=batch_id, from_dt=from_dt)
         data_over_time: List[Model] = await Model.query.where(clause).order_by(
-            Model.measurement_ts.asc()
+            Model.measurement_ts.desc()
         ).offset(
             page_size * (page - 1)
         ).limit(

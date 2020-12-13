@@ -46,6 +46,10 @@ CREATE OR REPLACE FUNCTION add_started_at_to_batch()
 $$
 DECLARE
     s_batch batches%rowtype;
+    oee float;
+    planned_production_time float;
+    ideal_cycle_time float;
+    max_machine_speed float;
 BEGIN
     SELECT * FROM batches
     INTO s_batch
@@ -58,12 +62,6 @@ BEGIN
     if s_batch.started_dt is null then
         UPDATE batches
         SET started_dt=NEW."measurement_ts"
-        WHERE identifier=NEW."batch_id";
-    end if;
-
-    if NEW."state" = 16 then
-        UPDATE batches
-        SET finished_dt=NEW."measurement_ts"
         WHERE identifier=NEW."batch_id";
     end if;
 RETURN NEW;
