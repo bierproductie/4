@@ -11,7 +11,7 @@ from bierproductie_api.domain.maintenance import maintx_queries
 from bierproductie_api.domain.maintenance import maintx_services
 from bierproductie_api.domain.recipes import recipe_queries
 from bierproductie_api.domain.recipes import recipe_services
-
+from bierproductie_api.domain.commands import command_services
 
 def get_recipe_services() -> recipe_services.Service:
     return recipe_services.Service(recipe_queries.Queries())
@@ -36,3 +36,7 @@ def get_maintx_services() -> maintx_services.Service:
 def get_inventory_status_services() -> inventory_status_services.Service:
     return inventory_status_services.Service(
         inventory_status_queries.Queries())
+
+
+def get_command_services() -> command_services.Service:
+    return command_services.Service()
