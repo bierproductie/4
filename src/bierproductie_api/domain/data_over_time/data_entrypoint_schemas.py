@@ -48,8 +48,9 @@ class Create(pydantic.BaseModel):
         return value
 
 
-class Update(_Base):
+class Update(Create):
     """Update schema is used for validating POST requests."""
+    pass
 
 
 class DB(_Base):

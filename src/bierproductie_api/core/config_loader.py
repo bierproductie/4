@@ -30,6 +30,6 @@ DB_USE_CONNECTION_FOR_REQUEST: bool = config(
 )
 DB_RETRY_LIMIT: int = config("DB_RETRY_LIMIT", cast=int, default=32)
 DB_RETRY_INTERVAL: int = config("DB_RETRY_INTERVAL", cast=int, default=1)
-
+OPCUA_CLIENT_URL: str = config("OPCUA_CLIENT_URL")
 ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 SECRET_KEY: str = config("SECRET_KEY", default=str(uuid.uuid4()))
