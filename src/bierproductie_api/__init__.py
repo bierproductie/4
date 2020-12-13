@@ -10,6 +10,7 @@ from bierproductie_api.core import version
 from bierproductie_api.core.db import DB
 from bierproductie_api.routers import batches_route
 from bierproductie_api.routers import data_over_time_route
+from bierproductie_api.routers import inventory_statuses_route
 from bierproductie_api.routers import maintenance_route
 from bierproductie_api.routers import recipes_route
 
@@ -50,6 +51,8 @@ def _register_routes(app: FastAPI) -> FastAPI:
     Returns:
         FastAPI:
     """
+    app.include_router(inventory_statuses_route.router, tags=[
+                       "Inventory_Statuses"], prefix="/inventory_statuses")
     app.include_router(maintenance_route.router, tags=[
                        "Maintenance"], prefix="/maintenance")
     app.include_router(data_over_time_route.router, tags=[
