@@ -60,6 +60,7 @@ class Service:
         batch_id: int,
         page: int,
         page_size: int,
+        from_dt: datetime.datetime = None
     ) -> data_entrypoint_schemas.Paginated:
         """Gets a paginated result list of data_over_time.
 
@@ -72,9 +73,10 @@ class Service:
         data_over_time, total = await self._queries.get_list(
             batch_id=batch_id,
             page=page,
-            page_size=page_size)
+            page_size=page_size,
+            from_dt=from_dt)
         more = ((total / page_size) - page) > 0
-        number_of_pages = total / page_size
+        number_of_pages = max(total / page_size, 1)
         results = [data_entrypoint_schemas.DB.from_orm(
             data_entrypoint) for data_entrypoint in data_over_time]
         pagination = base_schemas.Pagination(total=total,

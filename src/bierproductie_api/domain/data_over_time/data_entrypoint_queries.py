@@ -3,6 +3,9 @@
 import datetime
 from typing import List
 from typing import Tuple
+from typing import Optional
+
+from sqlalchemy import and_
 
 from bierproductie_api.core.db import DB
 from bierproductie_api.domain.data_over_time import data_entrypoint_model
@@ -23,18 +26,25 @@ class Queries():
     async def get_list(self,
                        batch_id: int,
                        page_size: int,
-                       page: int) -> Tuple[List[Model], int]:
+                       page: int,
+                       from_dt: Optional[datetime.datetime]
+                       ) -> Tuple[List[Model], int]:
 
-        data_over_time: List[Model] = await Model.query.where(
-            Model.batch_id == batch_id
-        ).order_by(
+        clause = self.__from_clause(batch_id=batch_id, from_dt=from_dt)
+        data_over_time: List[Model] = await Model.query.where(clause).order_by(
             Model.measurement_ts.asc()
         ).offset(
             page_size * (page - 1)
         ).limit(
             page_size
         ).gino.all()
-        count = await DB.func.count(Model.measurement_ts).gino.scalar()
+
+        count = await DB.select(
+            [DB.func.count(Model.measurement_ts)]
+        ).where(
+            clause
+        ).gino.scalar()
+
         return data_over_time, count
 
     async def get_by_id(self, measurement_ts: datetime.datetime) -> Model:
@@ -50,3 +60,9 @@ class Queries():
         updated = await old_data_entrypoint.update(
             **new_data_entrypoint.__dict__).apply()
         return updated._instance  # pylint: disable=protected-access
+
+    def __from_clause(self, batch_id: int, from_dt: datetime.datetime = None):
+        if from_dt:
+            return and_(Model.batch_id == batch_id,
+                        Model.measurement_ts > from_dt)
+        return and_(Model.batch_id == batch_id)

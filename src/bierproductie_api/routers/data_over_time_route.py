@@ -6,6 +6,9 @@ the data_entrypoint service from the `service_factory`, by doing it this way
 the controller only knows which methods it can call in data_entrypoint Service
 but nothing about the database.
 """
+from typing import Optional
+import datetime
+
 import fastapi
 import pydantic
 from starlette import status
@@ -18,6 +21,7 @@ router = fastapi.APIRouter()
 
 @router.get('/{batch_id}', response_model=data_entrypoint_schemas.Paginated)
 async def get_data_over_time(batch_id: int,
+                             from_dt: Optional[datetime.datetime] = None,
                              page_size: pydantic.conint(ge=1, le=100) = 20,
                              page: pydantic.conint(ge=1) = 1,
                              service=fastapi.Depends(
