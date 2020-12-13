@@ -69,6 +69,15 @@ async def get_batch(identifier: int,
     return await service.get_by_id(identifier=identifier)
 
 
+@router.get('/latest/', response_model=batch_schemas.DB)
+async def get_latest_batch(service=fastapi.Depends(
+        service_factory.get_batch_services)):
+    """Get a batch with the provided identifier.
+
+    """
+    return await service.get_latest()
+
+
 @router.delete('/{identifier}', response_model=batch_schemas.DB)
 async def delete_batch(identifier: int,
                        service=fastapi.Depends(

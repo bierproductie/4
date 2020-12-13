@@ -26,6 +26,9 @@ class Queries:
     async def get_by_id(self, identifier: int) -> Model:
         return await Model.get(identifier)
 
+    async def get_latest(self) -> Model:
+        return await Model.query.order_by(Model.identifier.desc()).gino.first()
+
     async def delete(self, identifier: int) -> Model:
         batch = await self.get_by_id(identifier)
         await batch.delete()
