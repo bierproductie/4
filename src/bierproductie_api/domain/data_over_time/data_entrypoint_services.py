@@ -143,8 +143,11 @@ class Service:
         planned_production_time = self.calculate_planned_production_time(
             amount_to_produce=amount_to_produce,
             speed=speed)
+        produced = data_entrypoint.produced
+        rejected = data_entrypoint.rejected
+        accepted = produced - rejected
         oee = self.calculate_oee(
-            produced=data_entrypoint.produced,
+            accepted=accepted,
             planned_production_time=planned_production_time,
             ideal_cycle_time=ideal_cycle_time)
         updated_schema = batch_schemas.Update(
@@ -166,7 +169,7 @@ class Service:
         return (amount_to_produce / speed) * 60
 
     def calculate_oee(self,
-                      produced: int,
+                      accepted: int,
                       planned_production_time: float,
                       ideal_cycle_time: float) -> float:
-        return ((produced * ideal_cycle_time) / planned_production_time) * 100
+        return ((accepted * ideal_cycle_time) / planned_production_time) * 100
