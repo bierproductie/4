@@ -1,6 +1,6 @@
 """This module is where we setup our DB object
 """
-from gino.ext import starlette  # pylint: disable=no-name-in-module
+from gino.ext import starlette 
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy_utils import EmailType
 
@@ -13,8 +13,6 @@ DB = starlette.Gino(
     echo=config_loader.DB_ECHO,
     ssl=config_loader.DB_SSL,
     use_connection_for_request=config_loader.DB_USE_CONNECTION_FOR_REQUEST,
-    retry_limit=config_loader.DB_RETRY_LIMIT,
-    retry_interval=config_loader.DB_RETRY_INTERVAL,
 )
 
 DB.UUID = UUID
