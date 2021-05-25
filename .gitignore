@@ -20,3 +20,4 @@ src/tlog_api/tags
 requirements.*
 .mypy_cache/
 .cache/
+tags
