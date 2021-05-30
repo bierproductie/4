@@ -10,7 +10,7 @@ from typing import List
 
 import requests
 
-from bierproductie_api.core import config_loader
+from bierproductie_api.core import config_loader, exceptions
 from bierproductie_api.domain.batches import batch_queries
 from bierproductie_api.domain.batches import batch_schemas
 
@@ -40,6 +40,10 @@ class Service:
             batch_schemas.DB:
         """
         recipe = await self._recipe_queries.get_by_id(name=batch.recipe_id)
+        if batch.speed > recipe.max_speed:
+            raise exceptions.BadRequest("Speed is too high.")
+        if batch.speed < 1:
+            raise exceptions.BadRequest("Speed must atleast be 1.")
 
         client_batch = dict(speed=batch.speed,
                             amount_to_produce=batch.amount_to_produce,
