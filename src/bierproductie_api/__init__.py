@@ -25,7 +25,7 @@ def create_app() -> FastAPI:
         FastAPI:
     """
     app: FastAPI = FastAPI(
-        title="Bierproductie API", version=version.__version__,
+        title="S4G01 API", version=version.__version__,
     )
     _initalize_extensions(app=app)
     _add_middleware(app=app)
